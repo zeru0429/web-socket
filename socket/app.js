@@ -42,10 +42,10 @@ io.on("connection", (socket) => {
     }
 
     // Get user details from the database
-    const { email, activeStatus } = userExists[0]; // Assuming email and activeStatus are in the user record
+    const { email, status } = userExists[0]; // Assuming email and status are in the user record
 
     // Check if the user is active
-    if (activeStatus !== 1) {
+    if (status !== "active") {
       console.log("❌ User is inactive:", userId);
       socket.emit("loginError", "User is inactive");
       return;
@@ -63,7 +63,9 @@ io.on("connection", (socket) => {
       id: userId,
       socket: socket.id,
       email: email,
-      activeStatus: activeStatus,
+      first_name: userExists[0].first_name,
+      last_name: userExists[0].last_name,
+      status: status,
     };
     onlineUsers.push(user);
 
